@@ -1,0 +1,23 @@
+README for Date::Span
+
+This module provides code for dealing with datetime ranges that span multiple
+calendar days. This is useful for computing, for example, the amount of seconds
+spent performing a task on each day. Given the following table:
+
+  event   | begun            | ended
+ ---------+------------------+------------------
+  loading | 2004-01-01 00:00 | 2004-01-01 12:45
+  venting | 2004-01-01 12:45 | 2004-01-02 21:15
+  running | 2004-01-02 21:15 | 2004-01-03 00:00
+
+We may want to gather the following data:
+
+  date       | event   | time spent
+ ------------+---------+----------------
+  2004-01-01 | loading | 12.75 hours
+  2004-01-01 | venting | 11.25 hours
+  2004-01-02 | venting | 21.25 hours
+  2004-01-02 | running |  2.75 hours
+
+Date::Span takes a data like the first and produces data more like the second.
+(Details on exact interface in the POD.)
