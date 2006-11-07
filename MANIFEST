@@ -9,3 +9,4 @@ t/datespan.t
 t/from_unit.t
 t/pod-coverage.t
 t/pod.t
+t/perl-critic.t
