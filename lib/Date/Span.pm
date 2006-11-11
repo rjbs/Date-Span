@@ -17,7 +17,7 @@ Date::Span -- deal with date/time ranges than span multiple dates
 
 version 1.121
 
- $Id: Span.pm,v 1.7 2005/01/10 19:20:32 rjbs Exp $
+ $Id$
 
 =head1 SYNOPSIS
 
