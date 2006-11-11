@@ -1,5 +1,9 @@
 Revision history for Date::Span
 
+1.121  2006-11-10
+       simplify some code
+       perl::criticism
+
 1.12   2004-01-10 13:45
        added range_from_unit
        100% coverage (again?)
