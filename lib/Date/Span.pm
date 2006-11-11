@@ -1,14 +1,13 @@
-package Date::Span;
-
 use strict;
 use warnings;
 
-our $VERSION = '1.12';
+package Date::Span;
 
-use Exporter;
-our @ISA = qw(Exporter);
+use base qw(Exporter);
 
-our @EXPORT = qw(range_expand range_durations range_from_unit);
+our @EXPORT = qw(range_expand range_durations range_from_unit); ## no critic
+
+our $VERSION = '1.121';
 
 =head1 NAME
 
@@ -16,7 +15,7 @@ Date::Span -- deal with date/time ranges than span multiple dates
 
 =head1 VERSION
 
-version 1.12
+version 1.121
 
  $Id: Span.pm,v 1.7 2005/01/10 19:20:32 rjbs Exp $
 
@@ -143,30 +142,34 @@ sub _is_leap {
 	not($_[0] % 4) and (($_[0] % 100) or not($_[0] % 400)) and $_[0] > 0
 }
 
+sub _leap_secs {
+  _is_leap($_[0]) && $_[1] == 1 ? 86400 : 0
+}
+
 sub _begin_secs {
 	require Time::Local;
-	Time::Local::timegm(0,$_[4]||0,$_[3]||0,$_[2]||1,$_[1]||0,$_[0]);
+	Time::Local::timegm(
+    0,        # $sec
+    $_[4]||0, # $min
+    $_[3]||0, # $hour
+    $_[2]||1, # $mday
+    $_[1]||0, # $mon
+    $_[0]     # $year
+  );
 }
 
 sub range_from_unit {
 	my $code = (ref($_[-1])||'' eq 'CODE') ? pop : \&_begin_secs;
 	return unless @_;
 	my ($year,$month,$day,$hour,$min) = @_;
-	no strict 'refs';
 	my $begin_secs = $code->(@_);
-	my $length;
-	if (defined $min) {
-		$length = 60;
-	} elsif (defined $hour) {
-		$length = 3600;
-	} elsif ($day) {
-		$length = 86400
-	} elsif (defined $month) {
-		$length  = 86400 * $monthdays[$month+0];
-		$length += 86400 if ($month == 1) and _is_leap($year)
-	} else {
-		$length = 86400 * (_is_leap($year) ? 366 : 365);
-	}
+	my $length = defined $min   ? 60
+             : defined $hour  ? 3600
+             : defined $day   ? 86400
+             : defined $month ? 86400 * $monthdays[$month+0]
+                              + _leap_secs($year, $month)
+             :                  86400 * (_is_leap($year) ? 366 : 365);
+
 	return ($begin_secs, $begin_secs + $length - 1);
 }
 
@@ -178,14 +181,14 @@ This code was just yanked out of a general purpose set of utility functions
 I've compiled over the years.  It should be refactored (internally) and
 further tested.  The interface should stay pretty stable, though.
 
-=head1 AUTHORS
+=head1 AUTHOR
 
 Ricardo SIGNES, E<lt>rjbs@cpan.orgE<gt>
 
 =head1 COPYRIGHT
 
-(C) 2004, Ricardo SIGNES.
-Date::Span is available under the same terms as Perl itself. 
+(C) 2004-2006, Ricardo SIGNES.  Date::Span is available under the same terms as
+Perl itself. 
 
 =cut
 
