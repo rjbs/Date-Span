@@ -1,6 +1,5 @@
+use Date::Span;
 use Test::More;
-
-BEGIN { use_ok("Date::Span"); }
 
 eval { require Time::Local; };
 if ($@) {

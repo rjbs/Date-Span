@@ -1,16 +1,19 @@
 Revision history for Date::Span
 
-1.121  2006-11-10
-       simplify some code
-       perl::criticism
+1.122   2007-09-17
+        cope with new Test::More
 
-1.12   2004-01-10 13:45
-       added range_from_unit
-       100% coverage (again?)
+1.121   2006-11-10
+        simplify some code
+        perl::criticism
 
-1.10   2004-08-23 09:00
-       added standard tests
-       adopt internal standards
-       
-1.004  2004-06-30 13:33
-       fixed some pod whitespace problems
+1.12    2004-01-10 13:45
+        added range_from_unit
+        100% coverage (again?)
+
+1.10    2004-08-23 09:00
+        added standard tests
+        adopt internal standards
+        
+1.004   2004-06-30 13:33
+        fixed some pod whitespace problems

@@ -3,11 +3,12 @@ use warnings;
 
 package Date::Span;
 
-use base qw(Exporter);
+use Exporter;
+BEGIN { our @ISA = 'Exporter' }
 
 our @EXPORT = qw(range_expand range_durations range_from_unit); ## no critic
 
-our $VERSION = '1.121';
+our $VERSION = '1.122';
 
 =head1 NAME
 
@@ -15,9 +16,7 @@ Date::Span -- deal with date/time ranges than span multiple dates
 
 =head1 VERSION
 
-version 1.121
-
- $Id$
+version 1.122
 
 =head1 SYNOPSIS
 
