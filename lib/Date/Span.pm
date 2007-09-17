@@ -8,7 +8,7 @@ BEGIN { our @ISA = 'Exporter' }
 
 our @EXPORT = qw(range_expand range_durations range_from_unit); ## no critic
 
-our $VERSION = '1.122';
+our $VERSION = '1.123';
 
 =head1 NAME
 
@@ -16,7 +16,7 @@ Date::Span -- deal with date/time ranges than span multiple dates
 
 =head1 VERSION
 
-version 1.122
+version 1.123
 
 =head1 SYNOPSIS
 

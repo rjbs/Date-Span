@@ -1,5 +1,8 @@
 Revision history for Date::Span
 
+1.123   2007-09-17
+        cope with new Test::More *properly*
+
 1.122   2007-09-17
         cope with new Test::More
 
