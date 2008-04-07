@@ -1,9 +1,10 @@
-use ExtUtils::MakeMaker;
-use 5.006;
+use inc::Module::Install;
 
-WriteMakefile(
-	NAME			=> 'Date::Span',
-  LICENSE   => 'perl',
-	VERSION_FROM	=> 'lib/Date/Span.pm'
-);
+name          ('Date-Span');
+all_from      ('lib/Date/Span.pm');
+author        ('Ricardo Signes <rjbs@cpan.org>');
+license       ('perl');
 
+author_tests('xt');
+
+WriteAll();

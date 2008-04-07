@@ -1,4 +1,4 @@
-README for Date-Span 1.124
+README for Date-Span
 
 This module provides code for dealing with datetime ranges that span multiple
 calendar days. This is useful for computing, for example, the amount of seconds
