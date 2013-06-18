@@ -2,21 +2,12 @@ use strict;
 use warnings;
 
 package Date::Span;
+# ABSTRACT: deal with date/time ranges than span multiple dates
 
 use Exporter;
 BEGIN { our @ISA = 'Exporter' }
 
 our @EXPORT = qw(range_expand range_durations range_from_unit); ## no critic
-
-our $VERSION = '1.125';
-
-=head1 NAME
-
-Date::Span -- deal with date/time ranges than span multiple dates
-
-=head1 VERSION
-
-version 1.125
 
 =head1 SYNOPSIS
 
@@ -25,8 +16,6 @@ version 1.125
  @spanned = range_expand($start, $end);
 
  print "from $_->[0] to $_->[1]\n" for (@spanned);
-
-=cut
 
 =head1 DESCRIPTION
 
@@ -52,11 +41,9 @@ We may want to gather the following data:
 Date::Span takes a data like the first and produces data more like the second.
 (Details on exact interface are below.)
 
-=head1 FUNCTIONS
+=func range_durations
 
-=over
-
-=item C<< range_durations($start, $end) >>
+  my @durations = range_durations($start, $end)
 
 Given C<$start> and C<$end> as timestamps (in epoch seconds),
 C<range_durations> returns a list of arrayrefs.  Each arrayref is a date
@@ -65,7 +52,10 @@ the given range intersects with the date.
 
 =cut
 
-sub _date_time { my $date = $_[0] - (my $time = $_[0] % 86400); ($date, $time) }
+sub _date_time {
+  my $date = $_[0] - (my $time = $_[0] % 86400);
+  ($date, $time)
+}
 
 sub range_durations {
 	my ($start, $end) = @_;
@@ -79,7 +69,7 @@ sub range_durations {
 		(( $end_date != $start_date ) ? ( 86400 - $start_time ) : ($end - $start))
 	];
 
-	push @results, 
+	push @results,
 		map { [ $start_date + 86400 * $_, 86400 ] }
 		(1 .. ($end_date - $start_date - 86400) / 86400)
 		if ($end_date - $start_date > 86400);
@@ -89,7 +79,9 @@ sub range_durations {
 	return @results;
 }
 
-=item C<< range_expand($start, $end) >>
+=func range_expand
+
+  my @endpoint_pairs = range_expand($start, $end);
 
 Given C<$start> and C<$end> as timestamps (in epoch seconds),
 C<range_durations> returns a list of arrayrefs.  Each arrayref is a start and
@@ -109,7 +101,7 @@ sub range_expand {
 		$start, ( ( $end_date != $start_date ) ? ( $start_date + 86399 ) : $end )
 	];
 
-	push @results, 
+	push @results,
 		map { [ $start_date + 86400 * $_, $start_date + 86400 * $_ + 86399 ] }
 		(1 .. ($end_date - $start_date - 86400) / 86400)
 		if ($end_date - $start_date > 86400);
@@ -119,7 +111,9 @@ sub range_expand {
 	return @results;
 }
 
-=item C<< range_from_unit(@date_unit) >>
+=func range_from_unit
+
+  my ($start, $end) = range_from_unit(@date_unit)
 
 C<@date_unit> is a specification of a unit of time, in the form:
 
@@ -172,22 +166,11 @@ sub range_from_unit {
 	return ($begin_secs, $begin_secs + $length - 1);
 }
 
-=back
-
 =head1 TODO
 
 This code was just yanked out of a general purpose set of utility functions
 I've compiled over the years.  It should be refactored (internally) and
 further tested.  The interface should stay pretty stable, though.
-
-=head1 AUTHOR
-
-Ricardo SIGNES, E<lt>rjbs@cpan.orgE<gt>
-
-=head1 COPYRIGHT
-
-(C) 2004-2006, Ricardo SIGNES.  Date::Span is available under the same terms as
-Perl itself. 
 
 =cut
 
